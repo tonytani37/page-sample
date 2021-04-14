@@ -15,6 +15,7 @@ window.onload = function() {
       showHeroes(superHeroes);
     }
 }
+
 function populateHeader(obj) {
   const myH1 = document.createElement('h1');
   myH1.textContent = obj['squadName'];
