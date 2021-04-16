@@ -1,37 +1,45 @@
     // ブラウザが開かれたら動くやつ
-    window.onload = function(){
-        // 東京都公開のjsonデータを取得する
-        let requestURL ='https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/daily_positive_detail.json';
-        let request = new XMLHttpRequest(); // webからデータ受信するためのインスタンス作成。pythonみたいに外部ライブラリをimportしなくていいのは楽
+    // window.onload = function(){
+    // 東京都公開のjsonデータを取得する
+    let requestURL ='https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/daily_positive_detail.json';
+    let request = new XMLHttpRequest(); // webからデータ受信するためのインスタンス作成。pythonみたいに外部ライブラリをimportしなくていいのは楽
 
-        request.open('GET', requestURL); // 第一引数はデータを受け取るのでGETでよい　第二引数はデータ取得先のURL
+    request.open('GET', requestURL); // 第一引数はデータを受け取るのでGETでよい　第二引数はデータ取得先のURL　XMLHttpRequestは非同期リクエスト
 
-        request.responseType = 'json'; //　とってくるデータはjsonだと教えてやる
-        request.send();  // 受信実行？
+    request.responseType = 'json'; //　とってくるデータはjsonだと教えてやる
+    request.send();  // 受信実行？
 
-        // requestに入ってるjsonをresponseで取り出して変数tokyotownにセットしたのち、
-        // get_weekly_gain_ratio関数で必要な要素を抽出し、draw_graph関数でグラフを描く
-        request.onload = function() {
-            // データを取得する
-            const tokyotown = request.response;
-            // 戻り値が配列の場合、配列内に変数を指定して受け取ることができるみたい
-            let [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average] = get_weekly_gain_ratio(tokyotown);
+    // requestに入ってるjsonをresponseで取り出して変数tokyotownにセットしたのち、
+    // get_weekly_gain_ratio関数で必要な要素を抽出し、draw_graph関数でグラフを描く
+    request.onload = function() {
+        // データを取得する
+        const tokyotown = request.response;
+        // 戻り値が配列の場合、配列内に変数を指定して受け取ることができるみたい
+        let [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average] = get_json_data(tokyotown);
 
-            var DAYS = 300; //グラフの対象日数を指定。最新から何日前にするか(-DAYS)でスライスする
-            // データ(str)のスライスはstr.slice(a,b) aは開始、bは終了のindexを指定　どちらも省略可能
-            // 特定の要素を指定したい場合にはstr[i]とする。最後の要素指定は [str.length - 1]
-            // indexはもちろん0から始まる　
-            // console.log(tokyo_weekly[tokyo_weekly.length - 1])
-            draw_graph(tokyo_yymmdd.slice(-DAYS)
-                ,tokyo_weekly.slice(-DAYS)
-                ,tokyo_count.slice(-DAYS)
-                ,tokyo_average.slice(-DAYS)
-                );
-        }   
+        var DAYS = 365; //グラフの対象日数を指定。最新から何日前にするか(-DAYS)でスライスする
+
+        // データ(str)のスライスはstr.slice(a,b) aは開始、bは終了のindexを指定　どちらも省略可能
+        // 特定の要素を指定したい場合にはstr[i]とする。最後の要素指定は [str.length - 1]
+        // indexはもちろん0から始まる　
+        // console.log(tokyo_weekly[tokyo_weekly.length - 1])
+        draw_graph(tokyo_yymmdd.slice(-DAYS)
+        ,tokyo_weekly.slice(-DAYS)
+        ,tokyo_count.slice(-DAYS)
+        ,tokyo_average.slice(-DAYS)
+        );
     }
+    
+
+    // function draw_graph_r(tokyo_yymmdd.slice(-DAYS)
+    //     ,tokyo_weekly.slice(-DAYS)
+    //     ,tokyo_count.slice(-DAYS)
+    //     ,tokyo_average.slice(-DAYS)
+    //     )
+    // }
 
 // グラフ化対象データを抜き取る
-    function get_weekly_gain_ratio(jsonObj) {
+    function get_json_data(jsonObj) {
         let tokyo_data = jsonObj['data'];
         let tokyo_weekly = []; // 前週比感染率
         let tokyo_yymmdd = []; // データ日付
@@ -56,8 +64,11 @@
 
 //　グラフを描く(chart.jsを利用)
     function draw_graph(tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average) {
-        var ctx = document.getElementById("myLineChart");
-        var myLineChart = new Chart(ctx, {
+        var canvas = document.getElementById("myLineChart");
+        canvas.width=window.innerWidth*0.3;
+        canvas.height=window.innerHeight*0.3;
+        var ctx = canvas.getContext('2d');
+         var myLineChart = new Chart(ctx, {
             type: 'bar', //　ここはbarにしないと全部が表示されない
             data: {
                 labels: tokyo_yymmdd, // jsonから抜きだした日付の配列
@@ -67,7 +78,7 @@
                     label: '感染者移動平均',
                     type:'line', // 折れ線グラフの指定
                     data: tokyo_average, // jsonから抜き出した感染者移動平均の配列
-                    borderColor : "red", // グラフの枠線色指定
+                    borderColor : "darkred", // グラフの枠線色指定
                     // backgroundColor : "rgba(254,97,132,0.2)",
                     backgroundColor : "rgba(255,0,0,0.1)", // グラフの塗りつぶし色指定 折れ線グラフの場合、グラフ線以下が塗りつぶされる rgbaのaは不透明度(1:塗りつぶし,0:透明)
                     // yAxisID:'y-axis-1',
@@ -83,7 +94,29 @@
                     // yAxisID:'y-axis-2',
                     },
                  ],
-            },
+             },
             }    
+         )
+        var canvas_r = document.getElementById("myLineChart_r");
+        canvas_r.width=window.innerWidth*0.3;
+        canvas_r.height=window.innerHeight*0.3;
+        var ctx_r = canvas_r.getContext('2d');
+        var myLineChart_r = new Chart(ctx_r, {
+            type: 'bar', //　ここはbarにしないと全部が表示されない
+            data: {
+                labels: tokyo_yymmdd, // jsonから抜きだした日付の配列
+                datasets: [
+                // 折れ線グラフ
+                {
+                    label: '先週比感染者率',
+                    type:'line', // 折れ線グラフの指定
+                    data: tokyo_weekly, // jsonから抜き出した感染者移動平均の配列
+                    borderColor : "darkblue", // グラフの枠線色指定
+                    // backgroundColor : "rgba(254,97,132,0.2)",
+                    backgroundColor : "rgba(0,0,0,0)", // グラフの塗りつぶし色指定 折れ線グラフの場合、グラフ線以下が塗りつぶされる rgbaのaは不透明度(1:塗りつぶし,0:透明)
+                    },
+                 ],
+            },
+         }
         )
     }
