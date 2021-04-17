@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js"></script>
+<body>
+
+<canvas id="myLineChart">ここにチャート表示</canvas>
+<script>var ctx = document.getElementById('myLineChart').getContext('2d');
+var myChart_fukui_temp2 = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+        datasets: [{
+                label: '月別気温(2019)',
+                data: [3.7, 5.3, 8.4, 12.0, 19.3, 22.0, 25.7, 28.2, 24.8, 18.5, 11.5, 7.5],
+                type: 'line',
+                fill: false,
+                lineTension: 0,
+                backgroundColor: 'rgba(200,60,60,1)',
+                borderColor: 'rgba(200,60,60,1)',
+                borderWidth: 2,
+                pointRadius: 3,
+                pointBackgroundColor: 'rgba(200,60,60,1)',
+                datalabels: {
+                    display: false
+                }
+            },
+            {
+                //hidden: true,
+                label: '月別気温(1919)',
+                data: [1.4, 2.9, 7.2, 12.4, 16.9, 21.0, 24.5, 25.5, 21.4, 16.2, 10.8, 4.7],
+                type: 'line',
+                fill: false,
+                lineTension: 0,
+                backgroundColor: 'rgba(60,200,60,1)',
+                borderColor: 'rgba(60,200,60,1)',
+                borderWidth: 2,
+                pointRadius: 3,
+                pointBackgroundColor: 'rgba(60,200,60,1)',
+                datalabels: {
+                    display: false
+                }
+            }
+        ]
+    },
+    options: {
+        title: {
+            display: true,
+            text: '福井県 月別気温比較（2019、1919）',
+            padding: 8,
+            fontSize: 20
+        },
+        legend: {
+            display: window.screen.width > 481,
+            position: 'bottom',
+            labels: {
+                fontSize: 14,
+                padding: 10
+            }
+        },
+        scales: {
+            xAxes: [{
+                id: 'X軸',
+                stacked: true,
+                scaleLabel: {
+                    display: true,
+                    fontSize: 18
+                },
+                gridLines: {
+                },
+                ticks: {
+                    autoSkip: false,
+                    fontSize: 10
+                },
+                offset: true
+            }],
+            yAxes: [
+                {
+                    id: 'y左軸',
+                    position: 'left',
+                    gridLines: {
+                        lineWidth: 0,
+                        display: false,
+                    },
+                    scaleLabel: {
+                        display: window.screen.width > 414,
+                        labelString: '月平均気温（℃）',
+                        fontSize: 18
+                    },
+                    ticks: {
+                        display: window.screen.width > 321,
+                        min: 0,
+                        max: 30,
+                        stepSize: 10
+                    }
+                }
+            ]
+        },
+        annotation: {
+            annotations: [{
+                    type: 'line',
+                    drawTime: 'afterDatasetsDraw',
+                    id: 'a-line-1',
+                    mode: 'horizontal',
+                    scaleID: 'y左軸',
+                    value: 15.6,
+                    endValue: 15.6,
+                    borderColor: 'red',
+                    borderWidth: 3,
+                    borderDash: [2, 2],
+                    borderDashOffset: 1,
+                    label: {
+                        backgroundColor: 'rgba(255,255,255,0.8)',
+                        bordercolor: 'rgba(200,60,60,0.8)',
+                        borderwidth: 2,
+                        fontSize: 10,
+                        fontStyle: 'bold',
+                        fontColor: 'rgba(200,60,60,0.8)',
+                        xPadding: 10,
+                        yPadding: 10,
+                        cornerRadius: 3,
+                        position: 'left',
+                        xAdjust: 0,
+                        yAdjust: 0,
+                        enabled: true,
+                        content: '平均気温(2019) 15.6℃'
+                    }
+                },
+        //         {
+        //             type: 'line',
+        //             drawTime: 'afterDatasetsDraw',
+        //             id: 'a-line-2',
+        //             mode: 'horizontal',
+        //             scaleID: 'y左軸',
+        //             value: 13.7,
+        //             endValue: 13.7,
+        //             borderColor: 'rgba(60,200,60,0.8)',
+        //             borderWidth: 3,
+        //             borderDash: [2, 2],
+        //             borderDashOffset: 1,
+        //             label: {
+        //                 backgroundColor: 'rgba(255,255,255,0.8)',
+        //                 bordercolor: 'rgba(60,200,60,0.8)',
+        //                 borderwidth: 2,
+        //                 fontSize: 10,
+        //                 fontStyle: 'bold',
+        //                 fontColor: '#333',
+        //                 xPadding: 10,
+        //                 yPadding: 10,
+        //                 cornerRadius: 3,
+        //                 position: 'left',
+        //                 xAdjust: 0,
+        //                 yAdjust: 0,
+        //                 enabled: true,
+        //                 content: '平均気温(1919) 13.7℃'
+        //             }
+        //         }
+            ]
+        },
+        // maintainAspectRatio: false,
+    }
+});
+</script>
+</div>
+</body>
+</html>
