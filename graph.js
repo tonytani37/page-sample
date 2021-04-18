@@ -111,7 +111,7 @@
              options: {
                 title: {
                     display: true,
-                    text: '感染者数、感染者数平均移動',
+                    text: '感染者数、感染者数移動平均',
                     padding: 5,
                     fontSize: 20
                 },
