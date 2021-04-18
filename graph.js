@@ -225,7 +225,7 @@
                             },
                             scaleLabel: {
                                 display: window.screen.width > 414,
-                                labelString: '感染者数（人）',
+                                labelString: '感染率',
                                 fontSize: 18
                             },
                             ticks: {
