@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
+  <meta charset="utf-8">
     <!-- 東京都が公開している新型コロナ感染者データ(json)を取得して、特定の項目をグラフ化する処理を
     javascriptで書いてみた練習 -->
   <meta charset="utf-8">
@@ -10,20 +12,26 @@
   <!-- <script src="path/to/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script> -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/0.5.7/chartjs-plugin-annotation.min.js'></script>
+  <!-- <script src="path/to/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script> -->
   <title>東京都新型コロナ感染状況</title>  
 </head>
 <body>
 　<script src='graph.js'></script>
 　<h1>東京都新型コロナ感染状況</h1>
-  <div style="position:absolute; top:150px; left:10px; width:640px; height:480px;">
+  <div style="position:absolute; top:150px; left:10px; width:1000px; height:640px;">
       <!-- <canvas id="myLineChart" style="position: relative; height:60px; width:150px"></canvas> -->
       <canvas id="myLineChart"></canvas>
-    </div>
-    <div style="position:absolute; top:150px; left:650px; width:640px; height:480px;"> 
-        <canvas id="myLineChart_r"></canvas>
+  </div>
+  <div style="position:absolute; top:650px; left:10px; width:1000px; height:640px;"> 
+    <hr>
+  </div>
+  <!-- <div style="position:absolute; top:150px; left:650px; width:640px; height:640px;">  -->
+    <div style="position:absolute; top:700px; left:10px; width:1000px; height:640px;"> 
+
+      <canvas id="myLineChart_r"></canvas>
     </div>  
 
-    <div style="position:absolute; top:560px; left:10px; width:1280px; height:500px;">
+    <div style="position:absolute; top:1200px; left:10px; width:1080px; height:500px;">
       <hr>
           data: https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/daily_positive_detail.json
     </div>
