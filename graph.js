@@ -92,6 +92,7 @@
                 {
                     label: '感染者移動平均',
                     type:'line', // 折れ線グラフの指定
+                    fill:false,
                     data: tokyo_average, // jsonから抜き出した感染者移動平均の配列
                     borderColor : "darkred", // グラフの枠線色指定
                     // backgroundColor : "rgba(254,97,132,0.2)",
@@ -101,6 +102,7 @@
                 {
                     label: '感染者数',
                     type:'bar', // 棒グラフの指定
+                    fill:false,
                     data: tokyo_count, // jsonから抜き出した感染者数の配列
                     //   borderColor: "rgba(255,0,0,1)",
                     borderColor: "gray",
@@ -175,8 +177,9 @@
                 datasets: [
                 // 折れ線グラフ
                 {
-                    label: '感染者率（先週比）',
+                    label: '先週比感染者率',
                     type:'line', // 折れ線グラフの指定
+                    fill:false,
                     data: tokyo_weekly, // jsonから抜き出した感染者移動平均の配列
                     borderColor : "darkblue", // グラフの枠線色指定
                     // backgroundColor : "rgba(254,97,132,0.2)",
@@ -225,7 +228,7 @@
                             },
                             scaleLabel: {
                                 display: window.screen.width > 414,
-                                labelString: '感染率',
+                                labelString: '先週比感染率',
                                 fontSize: 18
                             },
                             ticks: {
