@@ -15,7 +15,7 @@
         // データを取得する
         const tokyotown = request.response;
         // 戻り値が配列の場合、配列内に変数を指定して受け取ることができるみたい
-        let [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average] = get_json_data(tokyotown);
+        let [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average,update_date] = get_json_data(tokyotown);
 
         var DAYS = 365; //グラフの対象日数を指定。最新から何日前にするか(-DAYS)でスライスする
 
@@ -27,6 +27,7 @@
         ,tokyo_weekly.slice(-DAYS)
         ,tokyo_count.slice(-DAYS)
         ,tokyo_average.slice(-DAYS)
+        ,update_date
         );
     }
     
@@ -45,6 +46,7 @@
         let tokyo_yymmdd = []; // データ日付
         let tokyo_count = []; // 感染者数
         let tokyo_average = []; // 感染者移動平均
+        let update_date = jsonObj['date'];
         // let tokyo_weekly_w = []
         // jsonデータをforで回して、抜きたい項目ごとに配列を作成する
         for  (let i = 0; i < tokyo_data.length; i++) {
@@ -58,12 +60,12 @@
             tokyo_average.push(tokyo_data[i]['weekly_average_count'])
         }
         // 関数からの戻り値が複数ある場合には、配列にして返すべし
-        return [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average];
+        return [tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average,update_date];
     }
 
 
 //　グラフを描く(chart.jsを利用)
-    function draw_graph(tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average) {
+    function draw_graph(tokyo_yymmdd,tokyo_weekly,tokyo_count,tokyo_average,update_date) {
         var canvas = document.getElementById("myLineChart");
         // canvas.width=window.innerWidth*0.3;
         // canvas.height=window.innerHeight*0.3;
@@ -81,6 +83,9 @@
         let max_ratio = tokyo_weekly.reduce(function(a,b){
         return Math.max(a,b);
         });
+
+        let title_name = '感染者数、感染者数移動平均  ' + update_date ;
+        // console.log(update_date);
 
         var ctx = canvas.getContext('2d');
         var myLineChart = new Chart(ctx, {
@@ -113,7 +118,8 @@
              options: {
                 title: {
                     display: true,
-                    text: '感染者数、感染者数移動平均',
+                    // text: '感染者数、感染者数移動平均',
+                    text: title_name,
                     padding: 5,
                     fontSize: 20
                 },
@@ -168,8 +174,9 @@
          )
 
         var canvas_r = document.getElementById("myLineChart_r");
-        canvas_r.width=window.innerWidth*0.3;
-        canvas_r.height=window.innerHeight*0.3;
+        canvas_r.width=window.innerWidth;
+        canvas_r.height=window.innerHeight;
+        let title_name1 = '先週比感染率  ' + update_date ;
         var ctx_r = canvas_r.getContext('2d');
         var myLineChart_r = new Chart(ctx_r, {
             type: 'bar', //　ここはbarにしないと全部が表示されない
@@ -192,7 +199,8 @@
             options: {
                 title: {
                     display: true,
-                    text: '先週比感染率',
+                    // text: '先週比感染率',
+                    text : title_name1,
                     padding: 5,
                     fontSize: 20
                 },
