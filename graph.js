@@ -191,7 +191,7 @@
             options: {
                 title: {
                     display: true,
-                    text: '感染者率(先週比)',
+                    text: '先週比感染率',
                     padding: 5,
                     fontSize: 20
                 },
