@@ -254,9 +254,9 @@
                     {
                         type: 'line',
                         drawTime: 'afterDatasetsDraw',
-                        scaleID: 'y2',
+                        scaleID: 'y2', // yAxesで定義した名前(id:) これが連携出来てないと表示されない
                         mode: 'horizontal',
-                        id: 'a-line-1',
+                        id: 'a-line-1', // こいつはこの定義の名前
                         value: 1,
                         endValue: 1,
                         borderColor: 'red',
