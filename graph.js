@@ -83,8 +83,8 @@
         });
 
         var ctx = canvas.getContext('2d');
-         var myLineChart = new Chart(ctx, {
-            type: 'bar', //　ここはbarにしないと全部が表示されない
+        var myLineChart = new Chart(ctx, {
+            // type: 'bar', //　ここはbarにしないと全部が表示されない
             data: {
                 labels: tokyo_yymmdd, // jsonから抜きだした日付の配列
                 datasets: [
@@ -126,7 +126,7 @@
                 },
                 scales: {
                     xAxes: [{
-                        id: 'X軸',
+                        id: 'X1',
                         stacked: true,
                         scaleLabel: {
                             display: true,
@@ -142,7 +142,7 @@
                     }],
                     yAxes: [
                         {
-                            id: 'y左軸',
+                            id: 'y1',
                             position: 'left',
                             gridLines: {
                                 // lineWidth: 0,
@@ -166,6 +166,7 @@
             }
             }    
          )
+
         var canvas_r = document.getElementById("myLineChart_r");
         canvas_r.width=window.innerWidth*0.3;
         canvas_r.height=window.innerHeight*0.3;
@@ -204,7 +205,7 @@
                 },
                 scales: {
                     xAxes: [{
-                        id: 'X軸',
+                        id: 'X2',
                         stacked: true,
                         scaleLabel: {
                             display: true,
@@ -220,11 +221,11 @@
                     }],
                     yAxes: [
                         {
-                            id: 'y左軸',
+                            id: 'y2',
                             position: 'left',
                             gridLines: {
-                                // lineWidth: 0,
-                                // display: false,
+                                lineWidth: 1,
+                                display: true,
                             },
                             scaleLabel: {
                                 display: window.screen.width > 414,
@@ -240,20 +241,20 @@
                         }
                     ]
                 },
-            },
             annotation: {
-                annotations: [{
+                annotations: [
+                    {
                         type: 'line',
                         drawTime: 'afterDatasetsDraw',
-                        id: 'y左軸',
+                        scaleID: 'y2',
                         mode: 'horizontal',
-                        scaleID: 'a-line-1',
-                        value: 0.5,
-                        endValue: 0.5,
+                        id: 'a-line-1',
+                        value: 1,
+                        endValue: 1,
                         borderColor: 'red',
                         borderWidth: 3,
                         borderDash: [2, 2],
-                        borderDashOffset: 1
+                        borderDashOffset: 1,
                         // label: {
                         //     backgroundColor: 'rgba(255,255,255,0.8)',
                         //     bordercolor: 'rgba(200,60,60,0.8)',
@@ -268,11 +269,12 @@
                         //     xAdjust: 0,
                         //     yAdjust: 0,
                         //     enabled: true,
-                        //     content: '平均気温(2019) 15.6℃'
-                        // }
+                        //     content: '平均気温(2019) 15.6℃',
+                        // },
                     }
                 ]
             }
-         }
+          }
+        }
         )
     }
