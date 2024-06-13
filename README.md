@@ -1,6 +1,6 @@
 # page-sample
 
-git pagesを使ってみる
+github pagesを使ってみる
 
 リポジトリは公開でないとだめ（無料の場合）
 
